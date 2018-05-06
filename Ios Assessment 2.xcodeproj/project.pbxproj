@@ -15,6 +15,10 @@
 		9CA7C7E6209EB5600083A07F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA7C7E4209EB5600083A07F /* LaunchScreen.storyboard */; };
 		9CA7C7F1209EB5610083A07F /* Ios_Assessment_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C7F0209EB5610083A07F /* Ios_Assessment_2Tests.swift */; };
 		9CA7C7FC209EB5610083A07F /* Ios_Assessment_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C7FB209EB5610083A07F /* Ios_Assessment_2UITests.swift */; };
+		9CA7C80C209EB9C30083A07F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C80B209EB9C30083A07F /* TableViewController.swift */; };
+		9CA7C80E209EB9DE0083A07F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C80D209EB9DE0083A07F /* TableViewCell.swift */; };
+		9CA7C810209ECBA30083A07F /* ElementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C80F209ECBA30083A07F /* ElementViewController.swift */; };
+		9CA7C812209ECDDC0083A07F /* BirdData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C811209ECDDC0083A07F /* BirdData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		9CA7C7F7209EB5610083A07F /* Ios Assessment 2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ios Assessment 2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA7C7FB209EB5610083A07F /* Ios_Assessment_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ios_Assessment_2UITests.swift; sourceTree = "<group>"; };
 		9CA7C7FD209EB5610083A07F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CA7C80B209EB9C30083A07F /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		9CA7C80D209EB9DE0083A07F /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		9CA7C80F209ECBA30083A07F /* ElementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementViewController.swift; sourceTree = "<group>"; };
+		9CA7C811209ECDDC0083A07F /* BirdData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +114,10 @@
 				9CA7C7E4209EB5600083A07F /* LaunchScreen.storyboard */,
 				9CA7C7E7209EB5600083A07F /* Info.plist */,
 				9CA7C7DF209EB5580083A07F /* Ios_Assessment_2.xcdatamodeld */,
+				9CA7C80B209EB9C30083A07F /* TableViewController.swift */,
+				9CA7C80D209EB9DE0083A07F /* TableViewCell.swift */,
+				9CA7C80F209ECBA30083A07F /* ElementViewController.swift */,
+				9CA7C811209ECDDC0083A07F /* BirdData.swift */,
 			);
 			path = "Ios Assessment 2";
 			sourceTree = "<group>";
@@ -259,9 +271,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CA7C80E209EB9DE0083A07F /* TableViewCell.swift in Sources */,
 				9CA7C7DB209EB5580083A07F /* ViewController.swift in Sources */,
 				9CA7C7E1209EB5580083A07F /* Ios_Assessment_2.xcdatamodeld in Sources */,
 				9CA7C7D9209EB5580083A07F /* AppDelegate.swift in Sources */,
+				9CA7C80C209EB9C30083A07F /* TableViewController.swift in Sources */,
+				9CA7C810209ECBA30083A07F /* ElementViewController.swift in Sources */,
+				9CA7C812209ECDDC0083A07F /* BirdData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +451,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K9N2NB8P4;
 				INFOPLIST_FILE = "Ios Assessment 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K9N2NB8P4;
 				INFOPLIST_FILE = "Ios Assessment 2/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
