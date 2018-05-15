@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import os.log
 
 class TableViewController: UITableViewController {
 
@@ -38,6 +38,10 @@ class TableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	@IBAction func BackButton(_ sender: Any) {
+		dismiss(animated: true, completion: nil)
+	}
 
     // MARK: - Table view data source
 
@@ -115,13 +119,15 @@ class TableViewController: UITableViewController {
 	
 	
 	@IBAction func unwindToMealList(sender: UIStoryboardSegue) {
-		if let sourceViewController = sender.source as? ElementViewController, let meal = sourceViewController.bird {
+		if let sourceViewController = sender.source as? ElementViewController, let bird = sourceViewController.bird {
 			
 			// Add a new meal.
 			let newIndexPath = IndexPath(row: m_Birds.count, section: 0)
 			
-			m_Birds.append(meal)
+			m_Birds.append(bird)
 			tableView.insertRows(at: [newIndexPath], with: .automatic)
+			
+			print("SAVED");
 		}
 	}
 
