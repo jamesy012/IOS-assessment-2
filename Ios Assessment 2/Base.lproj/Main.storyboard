@@ -50,27 +50,24 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pXa-8t-TND">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="No Data" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pXa-8t-TND">
                                                 <rect key="frame" x="22" y="228" width="326" height="93"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rzg-zo-svr">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="No Data" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rzg-zo-svr">
                                                 <rect key="frame" x="24" y="358" width="326" height="93"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="d7D-Mf-VBU">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="No Data" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="d7D-Mf-VBU">
                                                 <rect key="frame" x="24" y="488" width="326" height="93"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
@@ -153,7 +150,12 @@
                     </navigationItem>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
+                        <outlet property="BirdDetails" destination="rzg-zo-svr" id="Xzj-sR-BFt"/>
                         <outlet property="BirdName" destination="j4Q-Ah-x0m" id="blw-c9-zV4"/>
+                        <outlet property="Description" destination="pXa-8t-TND" id="16I-Iq-aDW"/>
+                        <outlet property="MapView" destination="7qq-p3-PU8" id="FUB-cx-f4S"/>
+                        <outlet property="OtherInfo" destination="d7D-Mf-VBU" id="sJx-kw-u1D"/>
+                        <outlet property="ScrollView" destination="532-kG-8sg" id="Jmc-Wp-lkc"/>
                         <outlet property="SetImageButton" destination="YAL-Cg-HcD" id="lxl-4v-frV"/>
                         <outlet property="saveButton" destination="xY1-7y-d7M" id="7c2-IN-zia"/>
                     </connections>
@@ -201,6 +203,7 @@
                                 <connections>
                                     <outlet property="DetailTest" destination="mRb-Ay-kOD" id="0Xk-9p-WXI"/>
                                     <outlet property="TitleTest" destination="7Yu-AG-UIr" id="ZvR-kL-69o"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetail" id="Hf4-cn-jnt"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -309,4 +312,7 @@
     <resources>
         <image name="IMG_NoImage" width="64" height="64"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Hf4-cn-jnt"/>
+    </inferredMetricsTieBreakers>
 </document>

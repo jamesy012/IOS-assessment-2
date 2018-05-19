@@ -8,14 +8,21 @@
 
 import UIKit
 import os.log
+import MapKit
 
-class ElementViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ElementViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
 
 	@IBOutlet weak var saveButton: UIButton!
 	@IBOutlet weak var BirdName: UITextField!
 	@IBOutlet weak var SetImageButton: UIButton!
+	@IBOutlet weak var Description: UITextView!
+	@IBOutlet weak var BirdDetails: UITextView!
+	@IBOutlet weak var OtherInfo: UITextView!
+	
+	@IBOutlet weak var MapView: MKMapView!
 	
 	
+	@IBOutlet weak var ScrollView: UIScrollView!
 	
 	var bird : BirdData?
 	
@@ -24,8 +31,33 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
 		
 		
 		BirdName.delegate = self;
+		Description.delegate = self;
+		BirdDetails.delegate = self;
+		ScrollView.keyboardDismissMode = .onDrag;
 		
         // Do any additional setup after loading the view.
+		
+		//load bird data
+		if( bird != nil){
+			navigationItem.title = "Edit Bird";
+			BirdName.text = bird?.name;
+			Description.text = bird?.description;
+			BirdDetails.text = bird?.genderInfo;
+			OtherInfo.text = bird?.otherInfo;
+			
+			if(bird?.image == nil){
+				SetImageButton.setImage(UIImage(named: "IMG_NoImage"), for: .normal);
+			}else{
+				SetImageButton.setImage(bird?.image, for: .normal);
+			}
+			
+			for locs in (bird?.locations)! {
+				let annotation = MKPointAnnotation();
+				annotation.coordinate = locs.loc;
+				MapView.addAnnotation(annotation);
+			}
+		}
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +66,16 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
 	@IBAction func BackButton(_ sender: Any) {
-		dismiss(animated: true, completion: nil)
+		let isNavController = presentingViewController is UINavigationController;
+		if isNavController {
+			dismiss(animated: true, completion: nil);
+		}else{
+			if navigationController != nil {
+				navigationController?.popViewController(animated: true);
+			}else{
+				print("view controllers messed up somewhere");
+			}
+		}
 	}
 	
 	//MARK: - IMAGE SET
@@ -79,9 +120,9 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
 		
 		//SAVE GOES HERE
 		
-		let name : String = BirdName.text!;
 		// Set the meal to be passed to MealTableViewController after the unwind segue.
-		bird = BirdData(name: name);
+		bird = BirdData(name: BirdName.text!, description: Description.text!, genderInfo: BirdDetails.text!, otherInfo: OtherInfo.text!);
+		bird?.image = SetImageButton.image(for: .normal);
 		
 	}
 	
@@ -92,6 +133,15 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
 	*/
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder();
+		return true;
+	}
+	
+	func textViewDidEndEditing(_ textView: UITextView) {
+		textView.resignFirstResponder();
+	}
+	
+	func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+		textView.resignFirstResponder();
 		return true;
 	}
 

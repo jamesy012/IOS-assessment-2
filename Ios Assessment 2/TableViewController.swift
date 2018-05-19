@@ -22,16 +22,17 @@ class TableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
 		
-		
+		/*
 		guard let test1 = BirdData(name: "one") else {
 			fatalError("Unable to instantiate meal1");
 		}
 		guard let test2 = BirdData(name: "two") else {
 			fatalError("Unable to instantiate meal2");
 		}
+
 		
 		m_Birds += [test1, test2];
-		
+		*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +41,9 @@ class TableViewController: UITableViewController {
     }
 	
 	@IBAction func BackButton(_ sender: Any) {
-		dismiss(animated: true, completion: nil)
+		dismiss(animated: true, completion: nil);
+		
+		
 	}
 
     // MARK: - Table view data source
@@ -107,27 +110,50 @@ class TableViewController: UITableViewController {
     }
     */
 
-    /*
+	
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+		super.prepare(for: segue, sender: sender);
+		
+		switch(segue.identifier ?? ""){
+		case "AddItem":
+			print("Add item");
+		case "ShowDetail":
+			print("Show Item")
+			//assume these are all casted correctly
+			let birdViewController = segue.destination as? ElementViewController;
+			let selectedCell = sender as? TableViewCell;
+			let index = tableView.indexPath(for: selectedCell!);
+			let selectedBird = m_Birds[(index?.row)!];
+			birdViewController?.bird = selectedBird;
+			
+		default:
+			fatalError("Segue Error \(segue.identifier)");
+		}
+		
     }
-    */
+
 	
 	
 	@IBAction func unwindToMealList(sender: UIStoryboardSegue) {
 		if let sourceViewController = sender.source as? ElementViewController, let bird = sourceViewController.bird {
 			
-			// Add a new meal.
-			let newIndexPath = IndexPath(row: m_Birds.count, section: 0)
+			if let selectedIndex = tableView.indexPathForSelectedRow {
+				m_Birds[selectedIndex.row] = bird;
+				tableView.reloadRows(at: [selectedIndex], with: .none);
+			}else{
 			
-			m_Birds.append(bird)
-			tableView.insertRows(at: [newIndexPath], with: .automatic)
-			
-			print("SAVED");
+				// Add a new meal.
+				let newIndexPath = IndexPath(row: m_Birds.count, section: 0)
+				
+				m_Birds.append(bird)
+				tableView.insertRows(at: [newIndexPath], with: .automatic)
+			}
+			print("SAVED unwindToMealList");
 		}
 	}
 
