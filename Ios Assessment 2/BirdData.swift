@@ -10,23 +10,93 @@ import Foundation
 
 import MapKit;
 
-struct LocationData {
-	var loc : CLLocationCoordinate2D;
+struct PropertyKey{
+	static let name = "Name";
+	static let locations = "Locs";
+	static let description = "Description";
+	static let genderInfo = "GenderInfo";
+	static let otherInfo = "OtherInfo";
+	static let image = "Image";
+	static let LdLocLat = "LDataLocLAT";
+	static let LdLocLong = "LDataLocLONG";
+	static let LdDate = "LDataDate";
+}
+
+class LocationData : NSObject,NSCoding  {
+	func encode(with aCoder: NSCoder) {
+		aCoder.encode(loc?.latitude, forKey: PropertyKey.LdLocLat);
+		aCoder.encode(loc?.longitude, forKey: PropertyKey.LdLocLong);
+		aCoder.encode(date, forKey: PropertyKey.LdDate);
+	}
+	
+	required convenience init?(coder aDecoder: NSCoder) {
+		guard let date = aDecoder.decodeObject(forKey: PropertyKey.LdDate) as? String else {
+			print("Failed to decode element");
+			return nil;
+		}
+		
+		//let location = aDecoder.decodeObject(forKey: PropertyKey.LdLoc) as? CLLocationCoordinate2D;
+		
+		let lat = aDecoder.decodeObject(forKey: PropertyKey.LdLocLat) as? CLLocationDegrees;
+		let long = aDecoder.decodeObject(forKey: PropertyKey.LdLocLong) as? CLLocationDegrees;
+		
+		self.init(date: date,loc: CLLocationCoordinate2D(latitude: lat!, longitude: long!));
+	}
+	
+	init?(date : String, loc : CLLocationCoordinate2D){
+		self.date = date;
+		self.loc = loc;
+	}
+	
+	var loc : CLLocationCoordinate2D?;
 	var date = "";//todo: find date datatype
 }
 
-class BirdData {
+class BirdData : NSObject,NSCoding {
+	
+	// MARK: - SAVE/LOAD
+	
+	static let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!;
+	static let archiveURL = documentsDirectory.appendingPathComponent("BirdData");
+	
+	func encode(with aCoder: NSCoder) {
+		aCoder.encode(name, forKey: PropertyKey.name);
+		aCoder.encode(locations, forKey: PropertyKey.locations);
+		aCoder.encode(birdDescription, forKey: PropertyKey.description);
+		aCoder.encode(genderInfo, forKey: PropertyKey.genderInfo);
+		aCoder.encode(otherInfo, forKey: PropertyKey.otherInfo);
+		aCoder.encode(image, forKey: PropertyKey.image);
+	}
+	
+	required convenience init?(coder aDecoder: NSCoder) {
+		guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
+			print("Failed to decode element");
+			return nil;
+		}
+		
+		let locations = aDecoder.decodeObject(forKey: PropertyKey.locations) as? [LocationData?];
+		let description = aDecoder.decodeObject(forKey: PropertyKey.description) as? String;
+		let genderInfo = aDecoder.decodeObject(forKey: PropertyKey.genderInfo) as? String;
+		let otherInfo = aDecoder.decodeObject(forKey: PropertyKey.otherInfo) as? String;
+		let image = aDecoder.decodeObject(forKey: PropertyKey.image) as? UIImage;
+		
+		self.init(name: name, description: description!, genderInfo: genderInfo!, otherInfo: otherInfo!);
+		self.locations = locations!;
+		self.image = image;
+	}
+	
+	// MARK: - Everything else
 	
 	var name : String;
-	var locations = [LocationData]();
-	var description : String;
+	var locations = [LocationData?]();
+	var birdDescription : String;
 	var genderInfo : String;
 	var otherInfo : String;
 	var image : UIImage?;
 	
 	init?(name : String, description : String, genderInfo : String, otherInfo : String){
 		self.name = name;
-		self.description = description;
+		self.birdDescription = description;
 		self.genderInfo = genderInfo;
 		self.otherInfo = otherInfo;
 	}

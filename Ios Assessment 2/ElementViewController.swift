@@ -41,7 +41,7 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
 		if( bird != nil){
 			navigationItem.title = "Edit Bird";
 			BirdName.text = bird?.name;
-			Description.text = bird?.description;
+			Description.text = bird?.birdDescription;
 			BirdDetails.text = bird?.genderInfo;
 			OtherInfo.text = bird?.otherInfo;
 			
@@ -53,7 +53,8 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
 			
 			for locs in (bird?.locations)! {
 				let annotation = MKPointAnnotation();
-				annotation.coordinate = locs.loc;
+				annotation.coordinate = (locs?.loc)!;
+				annotation.subtitle = locs?.date;
 				MapView.addAnnotation(annotation);
 			}
 		}

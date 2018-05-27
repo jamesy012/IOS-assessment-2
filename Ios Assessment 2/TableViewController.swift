@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import MapKit;
 
 class TableViewController: UITableViewController {
 
@@ -23,16 +24,21 @@ class TableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
 		
 		/*
-		guard let test1 = BirdData(name: "one") else {
+		guard let test1 = BirdData(name: "name", description: "Desc", genderInfo: "GenderInf", otherInfo: "Other") else {
 			fatalError("Unable to instantiate meal1");
 		}
-		guard let test2 = BirdData(name: "two") else {
-			fatalError("Unable to instantiate meal2");
-		}
+		test1.locations += [LocationData(date: "Today", loc: CLLocationCoordinate2D(latitude: -37.8136276, longitude: 144.963057))]
+		//guard let test2 = BirdData(name: "two") else {
+		//	fatalError("Unable to instantiate meal2");
+		//}
 
 		
-		m_Birds += [test1, test2];
+		//m_Birds += [test1, test2];
+		m_Birds += [test1];
 		*/
+		if let birds = loadBirds() {
+			m_Birds = birds;
+		}
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,9 +136,16 @@ class TableViewController: UITableViewController {
 			let index = tableView.indexPath(for: selectedCell!);
 			let selectedBird = m_Birds[(index?.row)!];
 			birdViewController?.bird = selectedBird;
-			
+		case "SelectBirdLocation":
+			print("Show Bird Location")
+			//let locSetViewController = segue.destination as? LocationSetViewController;
+			let selectedCell = sender as? TableViewCell;
+			let index = tableView.indexPath(for: selectedCell!);
+			let selectedBird = m_Birds[(index?.row)!];
+			//locSetViewController?.bird = selectedBird;
+			LocationSetViewController.bird = selectedBird;
 		default:
-			fatalError("Segue Error \(segue.identifier)");
+			fatalError("Segue Error \(String(describing: segue.identifier))");
 		}
 		
     }
@@ -140,6 +153,17 @@ class TableViewController: UITableViewController {
 	
 	
 	@IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+		print("unwind");
+		if sender.source is LocationSetViewController {
+			let bird = LocationSetViewController.bird;
+			let selectedIndex = tableView.indexPathForSelectedRow;
+			m_Birds[(selectedIndex?.row)!] = bird!;
+			tableView.reloadRows(at: [selectedIndex!], with: .none);
+			print("Location updated bird");
+			saveBirds();
+			return;
+		}
+		
 		if let sourceViewController = sender.source as? ElementViewController, let bird = sourceViewController.bird {
 			
 			if let selectedIndex = tableView.indexPathForSelectedRow {
@@ -155,6 +179,24 @@ class TableViewController: UITableViewController {
 			}
 			print("SAVED unwindToMealList");
 		}
+		saveBirds();
+	}
+	
+	// MARK: - SAVE/LOAD
+	
+	func saveBirds(){
+		let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(m_Birds, toFile: BirdData.archiveURL.path);
+		
+		if isSuccessfulSave {
+			print("Save succeed");
+		}else{
+			print("Save failed...");
+		}	
+		
+	}
+	
+	func loadBirds() -> [BirdData]? {
+		return NSKeyedUnarchiver.unarchiveObject(withFile: BirdData.archiveURL.path) as? [BirdData];
 	}
 
 }

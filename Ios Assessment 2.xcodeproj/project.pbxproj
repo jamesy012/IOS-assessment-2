@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C60988720BA79F600459452 /* LocationSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60988620BA79F600459452 /* LocationSetViewController.swift */; };
 		9C61F82120AA720E00174C8D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C61F82020AA720E00174C8D /* MapKit.framework */; };
 		9CA7C7D9209EB5580083A07F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C7D8209EB5580083A07F /* AppDelegate.swift */; };
 		9CA7C7DB209EB5580083A07F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA7C7DA209EB5580083A07F /* ViewController.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C60988620BA79F600459452 /* LocationSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSetViewController.swift; sourceTree = "<group>"; };
 		9C61F82020AA720E00174C8D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9CA7C7D5209EB5580083A07F /* Ios Assessment 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ios Assessment 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA7C7D8209EB5580083A07F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				9CA7C80D209EB9DE0083A07F /* TableViewCell.swift */,
 				9CA7C80F209ECBA30083A07F /* ElementViewController.swift */,
 				9CA7C811209ECDDC0083A07F /* BirdData.swift */,
+				9C60988620BA79F600459452 /* LocationSetViewController.swift */,
 			);
 			path = "Ios Assessment 2";
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				9CA7C7D9209EB5580083A07F /* AppDelegate.swift in Sources */,
 				9CA7C80C209EB9C30083A07F /* TableViewController.swift in Sources */,
 				9CA7C810209ECBA30083A07F /* ElementViewController.swift in Sources */,
+				9C60988720BA79F600459452 /* LocationSetViewController.swift in Sources */,
 				9CA7C812209ECDDC0083A07F /* BirdData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
