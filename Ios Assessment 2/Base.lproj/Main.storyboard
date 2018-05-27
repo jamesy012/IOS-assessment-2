@@ -58,7 +58,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
-                                    <segue destination="wFl-Xj-6hA" kind="unwind" unwindAction="unwindToMealListWithSender:" id="Rhh-ao-hxb"/>
+                                    <segue destination="wFl-Xj-6hA" kind="unwind" unwindAction="unwindToBirdListWithSender:" id="Rhh-ao-hxb"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -205,7 +205,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
-                                    <segue destination="3Hw-my-U5I" kind="unwind" unwindAction="unwindToMealListWithSender:" id="1lc-pf-i3M"/>
+                                    <segue destination="3Hw-my-U5I" kind="unwind" unwindAction="unwindToBirdListWithSender:" id="1lc-pf-i3M"/>
                                 </connections>
                             </button>
                         </barButtonItem>
