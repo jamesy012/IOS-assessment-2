@@ -8,10 +8,15 @@
 
 import UIKit
 
+//just a holder class for the table view cells
 class TableViewCell: UITableViewCell {
+
+	// MARK: - Elements
 
 	@IBOutlet weak var TitleTest: UILabel!
 	@IBOutlet weak var DetailTest: UILabel!
+
+	// MARK: - Functions
 	
 	override func awakeFromNib() {
         super.awakeFromNib()

@@ -10,7 +10,10 @@ import UIKit
 import os.log
 import MapKit
 
+//handles the editing of the bird data
 class ElementViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
+
+	// MARK: - Elements
 
 	@IBOutlet weak var saveButton: UIButton!
 	@IBOutlet weak var BirdName: UITextField!
@@ -19,32 +22,38 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
 	@IBOutlet weak var BirdDetails: UITextView!
 	@IBOutlet weak var OtherInfo: UITextView!
 	
-	@IBOutlet weak var MapView: MKMapView!
-	
+	@IBOutlet weak var MapView: MKMapView!	
 	
 	@IBOutlet weak var ScrollView: UIScrollView!
 	
+	//reference to the bird data
+	//could be null (if we are making a new bird)
 	var bird : BirdData?
+
+	// MARK: - Functions
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
-		
+		//set up delegates and view info
 		BirdName.delegate = self;
 		Description.delegate = self;
 		BirdDetails.delegate = self;
 		ScrollView.keyboardDismissMode = .onDrag;
 		
-        // Do any additional setup after loading the view.
-		
 		//load bird data
+
+		//were we supplied a bird to edit or are we making a new one?
 		if( bird != nil){
+			//since we are editing the bird, update the title text
 			navigationItem.title = "Edit Bird";
+
 			BirdName.text = bird?.name;
 			Description.text = bird?.birdDescription;
 			BirdDetails.text = bird?.genderInfo;
 			OtherInfo.text = bird?.otherInfo;
 			
+			//load default no image image if there is none, else load image normaly
 			if(bird?.image == nil){
 				SetImageButton.setImage(UIImage(named: "IMG_NoImage"), for: .normal);
 			}else{
@@ -66,7 +75,9 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
+	//exit view via back button
 	@IBAction func BackButton(_ sender: Any) {
+		//needs to be different based on if we are editing or creating a new bird
 		let isNavController = presentingViewController is UINavigationController;
 		if isNavController {
 			dismiss(animated: true, completion: nil);
@@ -111,17 +122,7 @@ class ElementViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		super.prepare(for: segue, sender: sender);
 		
-		// Configure the destination view controller only when the save button is pressed.
-		/*
-		guard let button = sender as? UIBarButtonItem, button === saveButton else {
-			os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
-			return
-		}
-		*/
-		
-		//SAVE GOES HERE
-		
-		// Set the meal to be passed to MealTableViewController after the unwind segue.
+		// Set-up the meal to be passed to MealTableViewController after the unwind segue.
 		bird = BirdData(name: BirdName.text!, description: Description.text!, genderInfo: BirdDetails.text!, otherInfo: OtherInfo.text!);
 		bird?.image = SetImageButton.image(for: .normal);
 		

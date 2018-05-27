@@ -9,12 +9,16 @@
 import UIKit
 import MapKit;
 
+//deals with adding the current location to a bird
 class LocationSetViewController: UIViewController, CLLocationManagerDelegate {
 	
+	// MARK: - Elements
+
 	@IBOutlet weak var MapView: MKMapView!
 	@IBOutlet weak var BirdName: UILabel!
 	
-	//static because it was nil after passing it through, and since there is only one at a time, static will be fine
+	//static because it was nil after passing it through (unknown error/issue)
+	//Since there is only one at a time, static will be fine
 	static var bird : BirdData?
 	
 	var locManager : CLLocationManager?;
@@ -22,19 +26,22 @@ class LocationSetViewController: UIViewController, CLLocationManagerDelegate {
 	
 	var currAnnotation : MKPointAnnotation? = nil;
 	
+	//this could be useless? the aim was to only move the map to where the user is at the start
 	var hasMovedMap = false;
 	
+	// MARK: - Functions
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-		
+		//set up location manager
 		locManager = CLLocationManager();
 		locManager?.delegate = self;
 		locManager?.requestWhenInUseAuthorization();
 		locManager?.startUpdatingLocation();
 		
 		
+		//set up bord information
 		if(LocationSetViewController.bird != nil){
 			BirdName.text = LocationSetViewController.bird?.name;
 		}else{
@@ -55,11 +62,9 @@ class LocationSetViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-	
     // MARK: - Navigation
 
-	
+	//quick escape for back button press
 	@IBAction func BackButton(_ sender: Any) {
 		dismiss(animated: true, completion: nil);
 	}
@@ -69,7 +74,8 @@ class LocationSetViewController: UIViewController, CLLocationManagerDelegate {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 		
-		let ld = LocationData(date: "Today", loc: (currLoc?.coordinate)!);//todo: change Today with a real date
+		//hardcode today, undesirable but it works for this example
+		let ld = LocationData(date: "Today", loc: (currLoc?.coordinate)!);
 		LocationSetViewController.bird?.locations += [ld];
 		
 		print("Prepare - Back");
@@ -79,7 +85,7 @@ class LocationSetViewController: UIViewController, CLLocationManagerDelegate {
 	//MARK: - Location Delegate
 	
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		print("yes");
+		print("update location.");
 		currLoc = locations.last;
 		if !hasMovedMap {
 			hasMovedMap = true;

@@ -10,32 +10,16 @@ import UIKit
 import os.log
 import MapKit;
 
+//loads/saves and updates the cells
 class TableViewController: UITableViewController {
 
+	//list of our birds
 	var m_Birds = [BirdData]();
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-		
-		/*
-		guard let test1 = BirdData(name: "name", description: "Desc", genderInfo: "GenderInf", otherInfo: "Other") else {
-			fatalError("Unable to instantiate meal1");
-		}
-		test1.locations += [LocationData(date: "Today", loc: CLLocationCoordinate2D(latitude: -37.8136276, longitude: 144.963057))]
-		//guard let test2 = BirdData(name: "two") else {
-		//	fatalError("Unable to instantiate meal2");
-		//}
-
-		
-		//m_Birds += [test1, test2];
-		m_Birds += [test1];
-		*/
+		//if we have birds to load then set them as our list
 		if let birds = loadBirds() {
 			m_Birds = birds;
 		}
@@ -46,6 +30,7 @@ class TableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 	
+	//quick exit
 	@IBAction func BackButton(_ sender: Any) {
 		dismiss(animated: true, completion: nil);
 		
@@ -77,7 +62,7 @@ class TableViewController: UITableViewController {
 		cell.DetailTest.text = "\(indexPath.row)";
 		
 
-        return cell
+        return cell;
     }
     
 
@@ -127,17 +112,25 @@ class TableViewController: UITableViewController {
 		
 		switch(segue.identifier ?? ""){
 		case "AddItem":
+			//no data to pass through
 			print("Add item");
 		case "ShowDetail":
 			print("Show Item")
 			//assume these are all casted correctly
+			//get destination
 			let birdViewController = segue.destination as? ElementViewController;
+
+			//get BirdData reference
 			let selectedCell = sender as? TableViewCell;
 			let index = tableView.indexPath(for: selectedCell!);
 			let selectedBird = m_Birds[(index?.row)!];
+
+			//set destination's bird to selected bird
 			birdViewController?.bird = selectedBird;
 		case "SelectBirdLocation":
 			print("Show Bird Location")
+			//note: this destination has a static reference for it's bird
+
 			//let locSetViewController = segue.destination as? LocationSetViewController;
 			let selectedCell = sender as? TableViewCell;
 			let index = tableView.indexPath(for: selectedCell!);
@@ -152,32 +145,40 @@ class TableViewController: UITableViewController {
 
 	
 	
-	@IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+	@IBAction func unwindToBirdList(sender: UIStoryboardSegue) {
 		print("unwind");
+
+		//check if it's the LocationSet controller
 		if sender.source is LocationSetViewController {
+			//it's bird is static so handle it differntly 
 			let bird = LocationSetViewController.bird;
 			let selectedIndex = tableView.indexPathForSelectedRow;
 			m_Birds[(selectedIndex?.row)!] = bird!;
-			tableView.reloadRows(at: [selectedIndex!], with: .none);
+
+			//no viewable data is added
+			//tableView.reloadRows(at: [selectedIndex!], with: .none);
 			print("Location updated bird");
+			//finally save
 			saveBirds();
 			return;
 		}
 		
+		//check if it's from ElementViewController and get it's bird
 		if let sourceViewController = sender.source as? ElementViewController, let bird = sourceViewController.bird {
 			
+			//check to see if we need to add a new bird or update an existing one
 			if let selectedIndex = tableView.indexPathForSelectedRow {
+				//update
 				m_Birds[selectedIndex.row] = bird;
 				tableView.reloadRows(at: [selectedIndex], with: .none);
 			}else{
-			
-				// Add a new meal.
+				//add new bird
 				let newIndexPath = IndexPath(row: m_Birds.count, section: 0)
 				
 				m_Birds.append(bird)
 				tableView.insertRows(at: [newIndexPath], with: .automatic)
 			}
-			print("SAVED unwindToMealList");
+			print("SAVED unwindToBirdList");
 		}
 		saveBirds();
 	}

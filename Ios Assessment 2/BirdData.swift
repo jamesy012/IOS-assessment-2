@@ -10,6 +10,7 @@ import Foundation
 
 import MapKit;
 
+//list of keys for storing data
 struct PropertyKey{
 	static let name = "Name";
 	static let locations = "Locs";
@@ -22,20 +23,22 @@ struct PropertyKey{
 	static let LdDate = "LDataDate";
 }
 
+//holds information about the location
 class LocationData : NSObject,NSCoding  {
 	func encode(with aCoder: NSCoder) {
+		//need to store location in two parts because attempting to store CLLocationCoordinate2D crashes the app
 		aCoder.encode(loc?.latitude, forKey: PropertyKey.LdLocLat);
 		aCoder.encode(loc?.longitude, forKey: PropertyKey.LdLocLong);
+
 		aCoder.encode(date, forKey: PropertyKey.LdDate);
 	}
 	
 	required convenience init?(coder aDecoder: NSCoder) {
+		//make sure we can load first
 		guard let date = aDecoder.decodeObject(forKey: PropertyKey.LdDate) as? String else {
 			print("Failed to decode element");
 			return nil;
 		}
-		
-		//let location = aDecoder.decodeObject(forKey: PropertyKey.LdLoc) as? CLLocationCoordinate2D;
 		
 		let lat = aDecoder.decodeObject(forKey: PropertyKey.LdLocLat) as? CLLocationDegrees;
 		let long = aDecoder.decodeObject(forKey: PropertyKey.LdLocLong) as? CLLocationDegrees;
@@ -56,9 +59,11 @@ class BirdData : NSObject,NSCoding {
 	
 	// MARK: - SAVE/LOAD
 	
+	//where we are storing the data
 	static let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!;
 	static let archiveURL = documentsDirectory.appendingPathComponent("BirdData");
 	
+	//save
 	func encode(with aCoder: NSCoder) {
 		aCoder.encode(name, forKey: PropertyKey.name);
 		aCoder.encode(locations, forKey: PropertyKey.locations);
@@ -68,7 +73,9 @@ class BirdData : NSObject,NSCoding {
 		aCoder.encode(image, forKey: PropertyKey.image);
 	}
 	
+	//load
 	required convenience init?(coder aDecoder: NSCoder) {
+		//make sure we can load
 		guard let name = aDecoder.decodeObject(forKey: PropertyKey.name) as? String else {
 			print("Failed to decode element");
 			return nil;
@@ -81,6 +88,7 @@ class BirdData : NSObject,NSCoding {
 		let image = aDecoder.decodeObject(forKey: PropertyKey.image) as? UIImage;
 		
 		self.init(name: name, description: description!, genderInfo: genderInfo!, otherInfo: otherInfo!);
+		//these arnt included in the init function, so just add them afterwards
 		self.locations = locations!;
 		self.image = image;
 	}
